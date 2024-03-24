@@ -29,13 +29,15 @@ async def scheduler():
     while True:
         await asyncio.sleep(1)
         current_time = datetime.now(tz=config.tz).strftime("%H:%M:%S")
-        if current_time == '16:49:01':
+        if current_time == '06:00:01':
             await send_plan()
 
 
 if __name__ == "__main__":
     try:
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
         tasks = [loop.create_task(main()), loop.create_task(scheduler())]
         loop.run_until_complete(asyncio.wait(tasks))
     except (KeyboardInterrupt, SystemExit):
